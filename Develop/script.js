@@ -1,2 +1,7 @@
-var today = moment();
-$("#currentDay").text(today.format("MMMM Do, YYYY"));
+var today = moment().format("dddd MMMM Do, YYYY");
+$("#currentDay").text(today);
+
+var containerEl = $("#container");
+var timeBlockEl = $('<p>');
+timeBlockEl.appendTo(containerEl);
+
