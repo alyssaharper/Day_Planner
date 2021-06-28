@@ -4,20 +4,40 @@ $("#currentDay").text(today);
 var saveBtnEl = $(".saveBtn");
 var hourEl = saveBtnEl.parent(); 
 var descriptionEl = $(".description");
+var timeBlockEl = $(".time-block")
 
 function timeBlock() {
-    
+    timeBlockEl.each(function() {
+    var currentTime = parseInt(moment().hours());
+    var timeBlock = timeBlockEl.data('time')
+    // console.log(currentTime);
+    if(timeBlock < currentTime) {
+        timeBlockEl.removeClass("present");
+        timeBlockEl.removeClass("future");
+        timeBlockEl.addClass("past");
+    } else if (timeBlock === currentTime) {
+        timeBlockEl.addClass("present");
+        timeBlockEl.removeClass("future");
+        timeBlockEl.removeClass("past");
+    } else {
+        timeBlockEl.removeClass("present");
+        timeBlockEl.addClass("future");
+        timeBlockEl.removeClass("past");
+    }
+
+    })
     
 }
+timeBlock();
 
 function clickSave(event) {
     event.preventDefault();
 
     var dayPlanner = {
         time: hourEl.attr('id'),
-        description: descriptionEl.val()
+        description: descriptionEl.val().trim()
     }
-console.log(dayPlanner);
+// console.log(dayPlanner);
     localStorage.setItem("dayPlanner", JSON.stringify(dayPlanner));
     refresh();
 }
