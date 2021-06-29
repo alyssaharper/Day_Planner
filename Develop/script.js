@@ -1,4 +1,5 @@
-// sets the time at the top of the jumbrotron
+
+// sets the time at the top of the jumbotron
 var today = moment().format("dddd MMMM Do, YYYY");
 $("#currentDay").text(today);
 //DOM elements needed 
@@ -7,30 +8,28 @@ var hourEl = saveBtnEl.parent();
 var descriptionEl = $(".description");
 var timeBlockEl = $(".time-block")
 
-console.log(hourEl);
+// console.log(hourEl);
 //created a function that holds the current time, and then adds or removes appropriate classes based on time of day
 function timeBlock() {
     var currentTime = moment().hour();
     timeBlockEl.each(function() {
-    var timeBlock = $(this).attr("id").split("hour")[1];
+    var timeBlock = parseInt($(this).attr("id").split("hour")[1]);
     // console.log(currentTime);
     console.log(timeBlock);
     if(timeBlock < currentTime) {
-        timeBlockEl.removeClass("present");
-        timeBlockEl.removeClass("future");
-        timeBlockEl.addClass("past");
+        $(this).removeClass("present");
+        $(this).removeClass("future");
+        $(this).addClass("past");
     } else if (timeBlock === currentTime) {
-        timeBlockEl.addClass("present");
-        timeBlockEl.removeClass("future");
-        timeBlockEl.removeClass("past");
+        $(this).addClass("present");
+        $(this).removeClass("future");
+        $(this).removeClass("past");
     } else {
-        timeBlockEl.removeClass("present");
-        timeBlockEl.addClass("future");
-        timeBlockEl.removeClass("past");
+        $(this).removeClass("present");
+        $(this).addClass("future");
+        $(this).removeClass("past");
     }
-
     })
-    
 }
 timeBlock();
 
