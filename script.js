@@ -1,11 +1,10 @@
-
+function runDayPlanner() {
+    refresh();
 // sets the time at the top of the jumbotron
 var today = moment().format("dddd MMMM Do, YYYY");
 $("#currentDay").text(today);
 //DOM elements needed 
 var saveBtnEl = $(".saveBtn");
-var hourEl = saveBtnEl.parent(); 
-var descriptionEl = $(".description");
 var timeBlockEl = $(".time-block")
 
 // console.log(hourEl);
@@ -13,6 +12,7 @@ var timeBlockEl = $(".time-block")
 function timeBlock() {
     var currentTime = moment().hour();
     timeBlockEl.each(function() {
+        //targets this element id and splits it by hour starting at index 1 and the makes it an integer
     var timeBlock = parseInt($(this).attr("id").split("hour")[1]);
     // console.log(currentTime);
     console.log(timeBlock);
@@ -33,24 +33,31 @@ function timeBlock() {
 }
 timeBlock();
 
-
+// when the save button is clicked this function runs and sets items to local storage
 function clickSave(event) {
     event.preventDefault();
 
-    var dayPlanner = {
-        time: hourEl.attr('id'),
-        description: descriptionEl.val().trim()
-    }
-// console.log(dayPlanner);
-    localStorage.setItem("dayPlanner", JSON.stringify(dayPlanner));
+    var time = $(this).parent().attr("id");
+    var description = $(this).siblings(".description").val().trim();
+    
+    localStorage.setItem(time, description);
     refresh();
 }
-//NEED TO FIGURE OUT WHY IT IS DOING FOR ALL HOURS AND NOT JUST ONE
+// pulls all the different hours and descriptions from local storage
 function refresh() {
-    var newDay = JSON.parse(localStorage.getItem("dayPlanner"));
-    if (newDay !== null) {
-        descriptionEl.text(newDay.description);
-    }
+    $("#hour9 .description").val(localStorage.getItem("hour9"));
+    $("#hour10 .description").val(localStorage.getItem("hour10"));
+    $("#hour11 .description").val(localStorage.getItem("hour11"));
+    $("#hour12 .description").val(localStorage.getItem("hour12"));
+    $("#hour13 .description").val(localStorage.getItem("hour13"));
+    $("#hour14 .description").val(localStorage.getItem("hour14"));
+    $("#hour15 .description").val(localStorage.getItem("hour15"));
+    $("#hour16 .description").val(localStorage.getItem("hour16"));
+    $("#hour17 .description").val(localStorage.getItem("hour17"));
 }
 
 saveBtnEl.on('click', clickSave);
+
+};
+
+runDayPlanner();
